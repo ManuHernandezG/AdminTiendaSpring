@@ -80,12 +80,6 @@ public class WebSecurityConfig {
         return (web) -> web.ignoring().antMatchers("/js/**", "/style/**","/img/**");
     }
 
-    // @Bean
-    // public UserDetailsService userDetailsService(){
-    //     UserDetails user = User.withUserDetails(detailsServiceImpl.loadUserByUsername("username")).build();
-    //     return new InMemoryUserDetailsManager(user);
-    // }
-
     @Bean 
     public AuthenticationManager authManager(HttpSecurity http)throws Exception{
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
@@ -110,19 +104,4 @@ public class WebSecurityConfig {
         return authProvider;
     }
 
-    // @Bean
-    // public DataSource dataSource(){
-    //     return new EmbeddedDatabaseBuilder()
-    //         .setType(EmbeddedDatabaseType.H2)
-    //         .addScript(JdbcDaoImpl.DEFAULT_USER_SCHEMA_DDL_LOCATION)
-    //         .build();
-    // }
-
-    // @Bean
-    // public UserDetailsManager users(DataSource dataSource){
-    //     UserDetails user= User.withUserDetails(detailsServiceImpl.loadUserByUsername())
-
-    //     return ;
-        
-    // }
 }

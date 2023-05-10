@@ -4,8 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
+import curso.java.tienda.tiendamanuelhernandezgomez.domain.Usuario;
 import curso.java.tienda.tiendamanuelhernandezgomez.service.impl.RolService;
 import curso.java.tienda.tiendamanuelhernandezgomez.service.impl.UsuarioService;
 
@@ -29,6 +32,15 @@ public class ClientesController {
         model.addAttribute("cliente", usuarioService.findById(id));
         
         return "updateCliente";
+    }
+
+    @PostMapping("/clientes/update")
+    public String updateCliente(@ModelAttribute Usuario user){
+        if (usuarioService.) {
+            
+        } else {
+            
+        }
     }
 
     @GetMapping("/clientes/delete/{id}")

@@ -36,10 +36,10 @@ public class ClientesController {
 
     @PostMapping("/clientes/update")
     public String updateCliente(@ModelAttribute Usuario user){
-        if (usuarioService.) {
-            
+        if (usuarioService.updateUsuario(user)) {
+            return "redirect:/clientes";
         } else {
-            
+            return "/clientes/update/" + user.getId();
         }
     }
 

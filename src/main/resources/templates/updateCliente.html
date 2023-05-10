@@ -3,7 +3,7 @@
   lang="es"
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:th="http://www.thymeleaf.org"
-  >
+>
   <head>
     <title>Panel de control</title>
     <!-- Required meta tags -->
@@ -14,7 +14,7 @@
     />
 
     <!-- Bootstrap CSS v5.2.1 -->
-    <link rel="stylesheet"  href="/css/custom.css" />
+    <link rel="stylesheet" href="/css/custom.css" />
   </head>
 
   <body>
@@ -23,16 +23,15 @@
       <div class="row">
         <nav th:replace="@{fragments/menu.html} :: nav"></nav>
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-            
           <div
             class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
           >
-            <h1 class="h2">Actualizar producto</h1>
+            <h1 class="h2">Actualizar cliente</h1>
           </div>
 
           <form
-            th:action="@{/productos/update}"
-            th:object="${producto}"
+            th:action="@{/clientes/update}"
+            th:object="${cliente}"
             method="post"
           >
             <input type="hidden" name="id" th:field="*{id}" />
@@ -49,49 +48,27 @@
               </div>
             </div>
             <div class="mb-3 row">
-              <label for="descripcion" class="col-4 col-form-label"
-                >Descripcion</label
+              <label for="apellidos" class="col-4 col-form-label"
+                >Apellidos</label
               >
               <div class="col-8">
-                <textarea
-                  class="form-control"
-                  name="descripcion"
-                  id="descripcion"
-                  rows="3"
-                  th:field="*{descripcion}"
-                ></textarea>
-              </div>
-            </div>
-            <div class="mb-3 row">
-              <label for="precio" class="col-4 col-form-label">Precio</label>
-              <div class="col-8">
                 <input
-                  type="number"
+                  type="text"
                   class="form-control"
-                  name="precio"
-                  id="precio"
-                  th:field="*{precio}"
-                  step="0.01"
+                  name="apellidos"
+                  id="apellidos"
+                  aria-describedby="helpId"
+                  th:field="*{apellidos}"
                 />
               </div>
             </div>
-            <div class="mb-3 row">
-              <label for="stock" class="col-4 col-form-label">Stock</label>
-              <div class="col-8">
-                <input
-                  type="number"
-                  class="form-control"
-                  name="stock"
-                  id="stock"
-                  th:field="*{stock}"
-                  step="1"
-                />
-              </div>
             </div>
 
             <div class="mb-3 row">
               <div class="offset-sm-4 col-sm-8">
-                <button type="submit" class="btn btn-primary">Actualizar</button>
+                <button type="submit" class="btn btn-custom3">
+                  Actualizar
+                </button>
               </div>
             </div>
           </form>

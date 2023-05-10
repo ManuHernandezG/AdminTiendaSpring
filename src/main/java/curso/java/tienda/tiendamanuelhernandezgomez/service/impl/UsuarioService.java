@@ -84,8 +84,6 @@ public class UsuarioService {
         Usuario old= userRepository.getReferenceById(user.getId());
         old.setNombre(user.getNombre());
         old.setApellidos(user.getApellidos());
-        old.setRol(user.getRol());
-        old.setBaja(user.isBaja());
         if(userRepository.save(old)!=null){
             return true;
         }else{

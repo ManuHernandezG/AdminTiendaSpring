@@ -75,4 +75,8 @@ public class UsuarioService {
             return false;
         }
     }
+
+    public List<Usuario> findPersonal(){
+        
+    }
 }

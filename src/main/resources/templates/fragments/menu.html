@@ -96,7 +96,7 @@
           Clientes
         </a>
       </li>
-      <li class="nav-item" >
+      <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
         <a class="nav-link link-custom3" th:href="@{/empleados}">
           <svg
             xmlns="http://www.w3.org/2000/svg"

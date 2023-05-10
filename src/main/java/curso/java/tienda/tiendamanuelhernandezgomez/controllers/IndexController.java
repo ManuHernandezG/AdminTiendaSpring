@@ -14,7 +14,7 @@ public class IndexController {
     public String init(Model model){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         model.addAttribute("auth", auth);
-        System.out.println("Hola");
+        
         return "dashboard";
     }
 }

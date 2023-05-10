@@ -51,4 +51,28 @@ public class UsuarioService {
     public List<Usuario> findAllByRol(Rol rol){
         return userRepository.findByRol(rol);
     }
+
+    public Usuario findById(int id){
+        return userRepository.getReferenceById(id);
+    }
+
+    public boolean deleteUser(Integer id){
+        Usuario old=userRepository.getReferenceById(id);
+        old.setBaja(true);
+        if(userRepository.save(old)!=null){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public boolean activateUser(Integer id){
+        Usuario old=userRepository.getReferenceById(id);
+        old.setBaja(false);
+        if(userRepository.save(old)!=null){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

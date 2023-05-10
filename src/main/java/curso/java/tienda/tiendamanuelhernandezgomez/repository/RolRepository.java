@@ -8,4 +8,5 @@ import curso.java.tienda.tiendamanuelhernandezgomez.domain.Rol;
 @Repository
 public interface RolRepository extends JpaRepository<Rol, Integer>{
     
+    public Rol findByDescripcion(String desc);
 }

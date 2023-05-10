@@ -64,7 +64,7 @@ public class WebSecurityConfig {
         //     .and().headers().frameOptions().sameOrigin();
 
         http.authorizeRequests()
-            .antMatchers("/", "/dashboard","/index","/pedidos/**").hasAnyRole("EMPLOYER","ADMIN")
+            .antMatchers("/", "/dashboard","/index","/pedidos/**").authenticated() //.hasAnyRole("EMPLOYER","ADMIN")
             .antMatchers("/productos/**","/clientes/**","/empleados/**").hasRole("ADMIN")
             .antMatchers("/productos", "/productos/update","/productos/new","/clientes/update", "/clientes/new").hasRole("EMPLOYER")
             .and().formLogin()
@@ -77,7 +77,7 @@ public class WebSecurityConfig {
 
     @Bean 
     public WebSecurityCustomizer webSecurityCustomizer(){
-        return (web) -> web.ignoring().antMatchers("/js/**", "/style/**","/img/**");
+        return (web) -> web.ignoring().antMatchers("/js/**", "/css/**","/img/**","/i18n/**");
     }
 
     @Bean 

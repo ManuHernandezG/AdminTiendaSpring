@@ -1,5 +1,7 @@
 package curso.java.tienda.tiendamanuelhernandezgomez.service.impl;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import curso.java.tienda.tiendamanuelhernandezgomez.domain.Rol;
 import curso.java.tienda.tiendamanuelhernandezgomez.domain.Usuario;
 import curso.java.tienda.tiendamanuelhernandezgomez.repository.UsuarioRepository;
 
@@ -43,5 +46,9 @@ public class UsuarioService {
         }else{
             logger.error(String.format("Error with %s authentication!", username));
         }
+    }
+
+    public List<Usuario> findAllByRol(Rol rol){
+        return userRepository.findByRol(rol);
     }
 }

@@ -30,7 +30,7 @@ public class PedidosController {
     @GetMapping("/pedidos/tramitar/{id}")
     public String tramitPedido(@PathVariable int id,Model model){
         pedidoService.env(id);
-
+           
         return "redirect:/pedidos";
     }
 }

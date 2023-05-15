@@ -1,10 +1,14 @@
 package curso.java.tienda.tiendamanuelhernandezgomez.service.impl;
 
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import curso.java.tienda.tiendamanuelhernandezgomez.domain.Configuracion;
 import curso.java.tienda.tiendamanuelhernandezgomez.domain.Pedido;
 import curso.java.tienda.tiendamanuelhernandezgomez.domain.Pedido.StatusType;
 import curso.java.tienda.tiendamanuelhernandezgomez.repository.PedidoRepository;
@@ -13,6 +17,9 @@ public class PedidoService {
     
     @Autowired
     private PedidoRepository pedidoRepository;
+
+    @Autowired
+    private ConfiguracionService configuracionService;
 
     public List<Pedido> findAll(){
         return pedidoRepository.findAll();
@@ -31,6 +38,8 @@ public class PedidoService {
     public boolean env(int id) {
         Pedido old= pedidoRepository.getReferenceById(id);
         old.setEstado(StatusType.E);
+        old.setNumfactura(generarNumFactura());
+        configuracionService.updateFactura();
         if (pedidoRepository.save(old)!=null){
             return true;
         }else{
@@ -38,4 +47,13 @@ public class PedidoService {
         }
     }
 
+    public String generarNumFactura(){
+        Date fecha = new Date(); // supongamos que tienes un objeto Date con la fecha actual
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        String fechaString = formatter.format(fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+
+        Configuracion conf =configuracionService.get("factura");
+        String numFactura="THC-" + fechaString +"-" +  conf.getValor();
+        return numFactura;
+    }
 }

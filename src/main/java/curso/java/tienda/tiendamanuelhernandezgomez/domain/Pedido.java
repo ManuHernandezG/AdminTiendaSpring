@@ -1,8 +1,19 @@
 package curso.java.tienda.tiendamanuelhernandezgomez.domain;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,4 +37,16 @@ public class Pedido {
 	private String numfactura;
 	
 	private double total;
+
+	@Enumerated(EnumType.STRING)
+	private StatusType estado;
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pedido")
+	List<Detalle> detalles = new ArrayList<Detalle>();
+	
+	public enum StatusType {
+
+		PE,PC,E,C
+		
+	}
 }

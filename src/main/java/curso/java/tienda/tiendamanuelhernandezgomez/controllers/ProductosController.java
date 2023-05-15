@@ -52,9 +52,11 @@ public class ProductosController {
 
     @PostMapping("/productos/update")
     public String postUpdate(@ModelAttribute Producto prod,@RequestParam("file") MultipartFile file) throws IOException{
-        String ruta = "src/main/resources/static/img/" + file.getOriginalFilename();
-        prod.setImagen(file.getOriginalFilename());
-        Files.copy(file.getInputStream(), Paths.get(ruta));
+        if (file!=null){
+            String ruta = "src/main/resources/static/img/" + file.getOriginalFilename();
+            prod.setImagen(file.getOriginalFilename());
+            Files.copy(file.getInputStream(), Paths.get(ruta));
+        }
         if(productoServiceImpl.updateProd(prod)){
             return "redirect:/productos";
         }else{

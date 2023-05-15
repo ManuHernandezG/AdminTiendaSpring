@@ -8,4 +8,5 @@ import curso.java.tienda.tiendamanuelhernandezgomez.domain.Configuracion;
 @Repository
 public interface ConfiguracionRepository extends JpaRepository<Configuracion,Integer>{
     
+    String getByClave(String clave);
 }

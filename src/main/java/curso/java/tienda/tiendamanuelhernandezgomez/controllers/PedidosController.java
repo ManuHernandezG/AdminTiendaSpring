@@ -22,7 +22,15 @@ public class PedidosController {
 
     @GetMapping("/pedidos/cancel/{id}")
     public String cancelPedido(@PathVariable int id,Model model){
-        
+        pedidoService.cancel(id);
+
+        return "redirect:/pedidos";
+    }
+
+    @GetMapping("/pedidos/tramitar/{id}")
+    public String tramitPedido(@PathVariable int id,Model model){
+        pedidoService.env(id);
+
         return "redirect:/pedidos";
     }
 }

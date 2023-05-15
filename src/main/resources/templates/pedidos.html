@@ -81,7 +81,10 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                         <p class="text-muted mb-0" th:text="${ped.usuario.email}"></p>
                       </div>
                     </div>
-                    <span class="badge rounded-pill bg-custom3" th:text="${ped.estado}"></span>
+                    <span
+                    th:classappend="${ped.estado==T(curso.java.tienda.tiendamanuelhernandezgomez.domain.Pedido.StatusType).PC} ? 'badge rounded-pill bg-warning' : ''"
+                    class="badge rounded-pill bg-custom3" 
+                    th:text="${ped.estado}"></span>
                   </div>
                 </div>
                 <div
@@ -94,7 +97,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                                 <h5 class="mb-0">
                                     <button class="accordion-button" data-bs-toggle="collapse"
                                         aria-expanded="false"
-                                        th:attr="aria-controls=${ped.id},data-bs-target=${ped.id}"
+                                        th:attr="aria-controls=${ped.id},data-bs-target=${'#' + ped.id}"
                                         type="button"
                                         >
                                         <table class="table mb-0">
@@ -134,8 +137,8 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                     </div>
                 </div>
                 </div>
-                    <button class="btn btn-custom3 col-4 m-3" role="button" th:if="${ped.estado!='PC'}" data-bs-toggle="modal" data-bs-target="#tramitar">Tramitar cancelacion</button>
-                    <div class="modal fade" id="tramitar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <button class="btn btn-custom3 col-4 m-3" role="button" th:if="${ped.estado==T(curso.java.tienda.tiendamanuelhernandezgomez.domain.Pedido.StatusType).PC}" data-bs-toggle="modal" th:attr="data-bs-target=${'#cancelar' + ped.id}">Tramitar cancelacion</button>
+                    <div class="modal fade" th:attr="id=${'cancelar'+ ped.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                           <div class="modal-content">
                             <div class="modal-header">
@@ -148,6 +151,24 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                             <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                               <a th:href="@{/pedidos/cancel/}+${ped.id}"><button type="button" class="btn btn-custom1" >Cancelar pedido</button></a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <button class="btn btn-custom2 col-4 m-3" role="button" th:if="${ped.estado==T(curso.java.tienda.tiendamanuelhernandezgomez.domain.Pedido.StatusType).PE}" data-bs-toggle="modal" th:attr="data-bs-target=${'#tramitar' + ped.id}">Tramitar Envio</button>
+                      <div class="modal fade" th:attr="id=${'tramitar'+ ped.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h1 class="modal-title fs-5" id="exampleModalLabel">Envío</h1>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              ¿Seguro que quieres tramitar el pedido?
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                              <a th:href="@{/pedidos/tramitar/}+${ped.id}"><button type="button" class="btn btn-custom1" >Tramitar pedido</button></a>
                             </div>
                           </div>
                         </div>

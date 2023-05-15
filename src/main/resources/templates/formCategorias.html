@@ -32,10 +32,11 @@
           </div>
 
           <form
-            th:action="@{/categorias/new}"
+            th:action="${categoria.id !=0} ? @{/categorias/update} : @{/categorias/new}"
             th:object="${categoria}"
             method="post"
           >
+          <input type="hidden" name="id" th:field="*{id}">
             <div class="mb-3 row">
               <label for="descripcion" class="col-4 col-form-label"
                 >Descripcion</label
@@ -46,6 +47,7 @@
                   class="form-control"
                   name="descripcion"
                   id="descripcion"
+                  th:field="*{descripcion}"
                 >
               </div>
             </div>

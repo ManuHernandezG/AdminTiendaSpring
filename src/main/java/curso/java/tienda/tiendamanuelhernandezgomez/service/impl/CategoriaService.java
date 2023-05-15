@@ -29,4 +29,18 @@ public class CategoriaService {
     public Categoria findById(int id){
         return categoriaRepository.getReferenceById(id);
     }
+
+    public boolean update(Categoria cat){
+        Categoria old=categoriaRepository.getReferenceById(cat.getId());
+        old.setDescripcion(cat.getDescripcion());
+        if(categoriaRepository.save(old)!=null){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public Categoria findByDescripcion(String desc){
+        return categoriaRepository.findByDescripcion(desc);
+    }
 }

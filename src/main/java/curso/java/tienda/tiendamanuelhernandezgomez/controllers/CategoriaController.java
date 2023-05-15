@@ -46,4 +46,13 @@ public class CategoriaController {
         return "formCategorias";
     }
 
+    @PostMapping("/categorias/update")
+    public String updateCat(@ModelAttribute Categoria cat){
+        if (categoriaService.update(cat)){
+            return "redirect:/categorias";
+        }else{
+            return "/categorias/update";
+        }
+    }
+
 }

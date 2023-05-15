@@ -28,6 +28,7 @@ public class ProductoServiceImpl{
         old.setDescripcion(prod.getDescripcion());
         old.setPrecio(prod.getPrecio());
         old.setStock(prod.getStock());
+        old.setImagen(prod.getImagen());
         if(productoRepository.save(old)!=null){
             return true;
         }else{

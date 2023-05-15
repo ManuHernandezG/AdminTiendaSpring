@@ -3,7 +3,7 @@
   lang="es"
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:th="http://www.thymeleaf.org"
-  >
+>
   <head>
     <title>Panel de control</title>
     <!-- Required meta tags -->
@@ -14,7 +14,7 @@
     />
 
     <!-- Bootstrap CSS v5.2.1 -->
-    <link rel="stylesheet"  href="/css/custom.css" />
+    <link rel="stylesheet" href="/css/custom.css" />
   </head>
 
   <body>
@@ -23,7 +23,6 @@
       <div class="row">
         <nav th:replace="@{fragments/menu.html} :: nav"></nav>
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-            
           <div
             class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
           >
@@ -34,6 +33,7 @@
             th:action="@{/productos/update}"
             th:object="${producto}"
             method="post"
+            enctype="multipart/form-data"
           >
             <input type="hidden" name="id" th:field="*{id}" />
             <div class="mb-3 row">
@@ -88,10 +88,36 @@
                 />
               </div>
             </div>
-
             <div class="mb-3 row">
-              <div class="offset-sm-4 col-sm-8">
-                <button type="submit" class="btn btn-primary">Actualizar</button>
+              <label for="categoria" class="col-4 col-form-label"
+                >Categoria</label
+              >
+              <div class="col-8">
+                <select
+                  class="form-select form-select"
+                  name="categoria"
+                  id="categoria"
+                >
+                  <option
+                    th:each="cat : ${categorias}"
+                    th:text="${cat.descripcion}"
+                    th:value="${cat.id}"
+                    th:field="*{categoria}"
+                  ></option>
+                </select>
+              </div>
+            </div>
+            <div class="mb-3 row">
+              <label for="file" class="form-label col-4">Imagen</label>
+              <div class="col-8">
+                <input type="file" class="form-control" name="file" id="file" placeholder="Seleccionar una imagen">
+              </div>
+            </div>
+            <div class="mb-3 row">
+              <div class="text-end">
+                <button type="submit" class="btn btn-custom3 btn-lg">
+                  Actualizar
+                </button>
               </div>
             </div>
           </form>

@@ -37,6 +37,7 @@ public class ProductosController {
 
     @GetMapping("/productos/update/{id}")
     public String updateProducto(@PathVariable int id,Model model){
+        model.addAttribute("categorias", categoriaService.findAll());
         model.addAttribute("producto", productoServiceImpl.getById(id));
 
         return "updateProd";
@@ -50,7 +51,10 @@ public class ProductosController {
     }
 
     @PostMapping("/productos/update")
-    public String postUpdate(@ModelAttribute Producto prod){
+    public String postUpdate(@ModelAttribute Producto prod,@RequestParam("file") MultipartFile file) throws IOException{
+        String ruta = "src/main/resources/static/img/" + file.getOriginalFilename();
+        prod.setImagen(file.getOriginalFilename());
+        Files.copy(file.getInputStream(), Paths.get(ruta));
         if(productoServiceImpl.updateProd(prod)){
             return "redirect:/productos";
         }else{

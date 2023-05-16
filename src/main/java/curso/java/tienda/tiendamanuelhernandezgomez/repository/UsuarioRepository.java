@@ -15,7 +15,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     public Usuario findByEmail(String Email);
     public List<Usuario> findByRol(Rol rol);
     
-    @Query(value = "SELECT * FROM usuarios u WHERE u.rol_id=1 OR u.rol_id=2", nativeQuery = true)
+    @Query(value = "SELECT * FROM usuario u WHERE u.rol_id=1 OR u.rol_id=2", nativeQuery = true)
     public List<Usuario> findPersonal();
     
 }

@@ -35,7 +35,7 @@ public class PedidoService {
         }
     }
 
-    public boolean env(int id) {
+    public boolean enviar(int id) {
         Pedido old= pedidoRepository.getReferenceById(id);
         old.setEstado(StatusType.E);
         old.setNumfactura(generarNumFactura());

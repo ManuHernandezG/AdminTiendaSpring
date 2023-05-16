@@ -14,6 +14,9 @@ import curso.java.tienda.tiendamanuelhernandezgomez.domain.Pedido.StatusType;
 import curso.java.tienda.tiendamanuelhernandezgomez.repository.PedidoRepository;
 @Service
 public class PedidoService {
+
+    @Autowired
+    private EmailService emailService;
     
     @Autowired
     private PedidoRepository pedidoRepository;
@@ -41,6 +44,7 @@ public class PedidoService {
         old.setNumfactura(generarNumFactura());
         configuracionService.updateFactura();
         if (pedidoRepository.save(old)!=null){
+            // emailService.sendEmail("manuhg13@gmail.com", "Tu pedido se ha enviado", "El pedido " + old.getNumfactura() + "");
             return true;
         }else{
             return false;

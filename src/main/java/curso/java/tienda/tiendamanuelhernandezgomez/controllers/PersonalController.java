@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import curso.java.tienda.tiendamanuelhernandezgomez.domain.Usuario;
 import curso.java.tienda.tiendamanuelhernandezgomez.service.impl.RolService;
@@ -60,7 +61,20 @@ public class PersonalController {
 
     @GetMapping("/personal/new")
     public String formEmpleado(Model model){
+        model.addAttribute("usuario", new Usuario());
+        model.addAttribute("roles", rolService.findAll());
         return "registroEmpleado";
+    }
+
+    @PostMapping("/personal/new")
+    public String newEmpleado(@ModelAttribute Usuario user,Model model,@RequestParam(name = "pass2") String pass2){
+        if (user.getClave().equals(pass2)){
+            usuarioService.save(user);
+            return "redirect:/personal";
+        }else{
+            return "/personal/new";
+        }
+
     }
 
 }

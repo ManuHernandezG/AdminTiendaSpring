@@ -40,6 +40,9 @@ public class Producto {
 	
 	private int stock;
 	
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto")
+	private List<Imagen> imagenes=new ArrayList<Imagen>();
+
 	private boolean baja;
 
    

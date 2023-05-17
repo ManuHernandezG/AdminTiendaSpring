@@ -6,8 +6,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,7 +26,7 @@ public class Pedido {
     @Id	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	private Usuario usuario;
 	
 	private Date fecha;
@@ -38,15 +37,14 @@ public class Pedido {
 	
 	private double total;
 
-	@Enumerated(EnumType.STRING)
-	private StatusType estado;
+	private String estado;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pedido")
 	List<Detalle> detalles = new ArrayList<Detalle>();
 	
-	public enum StatusType {
+	// public enum StatusType {
 
-		PE,PC,E,C
+	// 	PE,PC,E,C
 		
-	}
+	// }
 }

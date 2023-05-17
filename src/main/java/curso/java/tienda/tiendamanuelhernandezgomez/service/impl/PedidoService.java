@@ -6,11 +6,12 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import curso.java.tienda.tiendamanuelhernandezgomez.domain.Configuracion;
 import curso.java.tienda.tiendamanuelhernandezgomez.domain.Pedido;
-import curso.java.tienda.tiendamanuelhernandezgomez.domain.Pedido.StatusType;
 import curso.java.tienda.tiendamanuelhernandezgomez.repository.PedidoRepository;
 @Service
 public class PedidoService {
@@ -30,7 +31,7 @@ public class PedidoService {
 
     public boolean cancel(int id) {
         Pedido old= pedidoRepository.getReferenceById(id);
-        old.setEstado(StatusType.C);
+        old.setEstado("C");
         if (pedidoRepository.save(old)!=null){
             return true;
         }else{
@@ -40,15 +41,28 @@ public class PedidoService {
 
     public boolean enviar(int id) {
         Pedido old= pedidoRepository.getReferenceById(id);
-        old.setEstado(StatusType.E);
+        old.setEstado("E");
         old.setNumfactura(generarNumFactura());
         configuracionService.updateFactura();
         if (pedidoRepository.save(old)!=null){
-            // emailService.sendEmail("manuhg13@gmail.com", "Tu pedido se ha enviado", "El pedido " + old.getNumfactura() + "");
+            emailService.sendEmail(old.getUsuario().getEmail(), "Tu pedido se ha enviado", "El pedido " + old.getNumfactura() + " ya ha sido enviado.");
             return true;
         }else{
             return false;
         }
+    }
+
+    @Transactional
+    @Scheduled(fixedDelay = 90000,initialDelay = 90000)
+    public void procesarPedidos(){
+        List<Pedido> tramit= findAll();
+
+        for (Pedido ped : tramit) {
+            if (ped.getEstado().equals("PE")){
+                enviar(ped.getId());
+            }
+        }
+        
     }
 
     public String generarNumFactura(){

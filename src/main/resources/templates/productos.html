@@ -75,6 +75,27 @@
                   style="width: 18rem"
                   th:each="prod : ${catalogo}"
                 >
+                <div id="carouselExampleIndicators" class="carousel slide mt-2"
+							data-bs-ride="carousel">
+
+							<div class="carousel-inner">
+								<div class="carousel-item active" th:each="img : ${prod.imagenes}">
+									<img th:attr="src=${img.url}" class="d-block w-100"
+										alt="Imagen producto">
+								</div>
+							</div>
+							<a class="carousel-control-prev"
+								href="#carouselExampleIndicators" role="button"
+								data-bs-slide="prev"> <span
+								class="carousel-control-prev-icon" aria-hidden="true"></span> <span
+								class="visually-hidden">Anterior</span>
+							</a> <a class="carousel-control-next"
+								href="#carouselExampleIndicators" role="button"
+								data-bs-slide="next"> <span
+								class="carousel-control-next-icon" aria-hidden="true"></span> <span
+								class="visually-hidden">Siguiente</span>
+							</a>
+						</div>
                   <!-- <img th:src="@{img/}+${prod.imagen}" class="card-img img-fluid mt-2" alt="..." /> -->
                   <div class="card-body">
                     <h5 class="card-title" th:text="${prod.nombre}"></h5>

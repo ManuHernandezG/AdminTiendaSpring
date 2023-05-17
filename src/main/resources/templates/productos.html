@@ -75,7 +75,7 @@
                   style="width: 18rem"
                   th:each="prod : ${catalogo}"
                 >
-                  <img th:src="@{img/}+${prod.imagen}" class="card-img img-fluid mt-2" alt="..." />
+                  <!-- <img th:src="@{img/}+${prod.imagen}" class="card-img img-fluid mt-2" alt="..." /> -->
                   <div class="card-body">
                     <h5 class="card-title" th:text="${prod.nombre}"></h5>
                     <p class="card-text" th:text="${prod.descripcion}"></p>

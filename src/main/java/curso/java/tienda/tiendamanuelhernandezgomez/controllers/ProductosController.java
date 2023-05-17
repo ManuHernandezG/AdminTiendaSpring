@@ -1,7 +1,6 @@
 package curso.java.tienda.tiendamanuelhernandezgomez.controllers;
 
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -15,8 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import curso.java.tienda.tiendamanuelhernandezgomez.domain.Imagen;
 import curso.java.tienda.tiendamanuelhernandezgomez.domain.Producto;
 import curso.java.tienda.tiendamanuelhernandezgomez.service.impl.CategoriaService;
+import curso.java.tienda.tiendamanuelhernandezgomez.service.impl.GCSStorageService;
+import curso.java.tienda.tiendamanuelhernandezgomez.service.impl.ImagenService;
 import curso.java.tienda.tiendamanuelhernandezgomez.service.impl.ProductoServiceImpl;
 
 @Controller
@@ -27,6 +29,12 @@ public class ProductosController {
 
     @Autowired 
     private CategoriaService categoriaService;
+
+    @Autowired
+    private ImagenService imagenService;
+
+    @Autowired
+    private GCSStorageService storageService;
 
     @GetMapping("/productos")
     public String productosInit(Model model){
@@ -53,14 +61,22 @@ public class ProductosController {
     @PostMapping("/productos/update")
     public String postUpdate(@ModelAttribute Producto prod,@RequestParam("file") MultipartFile file) throws IOException{
         if (file!=null){
-            String ruta = "src/main/resources/static/img/" + file.getOriginalFilename();
-            prod.setImagen(file.getOriginalFilename());
-            Files.copy(file.getInputStream(), Paths.get(ruta));
-        }
-        if(productoServiceImpl.updateProd(prod)){
-            return "redirect:/productos";
+            // String ruta = "src/main/resources/static/img/" + file.getOriginalFilename();
+            storageService.saveImagen(file, "spring-app-tch", file.getOriginalFilename());
+            // Files.copy(file.getInputStream(), Paths.get(ruta));
+            if(productoServiceImpl.updateProd(prod,file.getOriginalFilename())){
+                // imagenService.save(new Imagen(0, prod, "https://storage.googleapis.com/spring-app-tch/" + file.getOriginalFilename()));
+                return "redirect:/productos";
+            }else{
+                return "/productos/update/"+ prod.getId();
+            }
         }else{
-            return "/productos/update/"+ prod.getId();
+            if(productoServiceImpl.updateProd(prod)){
+                // imagenService.save(new Imagen(0, prod, "https://storage.googleapis.com/spring-app-tch/" + file.getOriginalFilename()));
+                return "redirect:/productos";
+            }else{
+                return "/productos/update/"+ prod.getId();
+            }
         }
     }
 
@@ -72,13 +88,23 @@ public class ProductosController {
 
     @PostMapping("/productos/new")
     public String newProd(@ModelAttribute Producto prod,@RequestParam("file") MultipartFile file) throws IOException{
-        String ruta = "src/main/resources/static/img/" + file.getOriginalFilename();
-        prod.setImagen(file.getOriginalFilename());
-        Files.copy(file.getInputStream(), Paths.get(ruta));
-        if (productoServiceImpl.save(prod)) {
-            return "redirect:/productos";
+        if (file!=null){
+            // String ruta = "src/main/resources/static/img/" + file.getOriginalFilename();
+            storageService.saveImagen(file, "spring-app-tch", file.getOriginalFilename());
+            // Files.copy(file.getInputStream(), Paths.get(ruta));
+            if(productoServiceImpl.save(prod,file.getOriginalFilename())){
+                // imagenService.save(new Imagen(0, prod, "https://storage.googleapis.com/spring-app-tch/" + file.getOriginalFilename()));
+                return "redirect:/productos";
+            }else{
+                return "/productos/update/"+ prod.getId();
+            }
         }else{
-            return "/productos/new";
+            if(productoServiceImpl.save(prod)){
+                // imagenService.save(new Imagen(0, prod, "https://storage.googleapis.com/spring-app-tch/" + file.getOriginalFilename()));
+                return "redirect:/productos";
+            }else{
+                return "/productos/update/"+ prod.getId();
+            }
         }
     }
 }

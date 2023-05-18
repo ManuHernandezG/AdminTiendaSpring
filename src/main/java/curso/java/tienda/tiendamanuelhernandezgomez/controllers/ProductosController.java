@@ -57,10 +57,16 @@ public class ProductosController {
 
         return "redirect:/productos";
     }
+    @GetMapping("/productos/activate/{id}")
+    public String activateProducto(@PathVariable int id,Model model){
+        productoServiceImpl.activateProd(id);
+
+        return "redirect:/productos";
+    }
 
     @PostMapping("/productos/update")
-    public String postUpdate(@ModelAttribute Producto prod,@RequestParam("file") MultipartFile file) throws IOException{
-        if (file!=null){
+    public String postUpdate(@ModelAttribute Producto prod,@RequestParam(name = "file",required = false) MultipartFile file) throws IOException{
+        if (file!=null && !file.isEmpty()){
             // String ruta = "src/main/resources/static/img/" + file.getOriginalFilename();
             storageService.saveImagen(file, "spring-app-tch", file.getOriginalFilename());
             // Files.copy(file.getInputStream(), Paths.get(ruta));

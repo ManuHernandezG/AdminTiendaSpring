@@ -3,6 +3,7 @@
   lang="es"
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
   <head>
     <title>Panel de control</title>
@@ -23,58 +24,42 @@
       <div class="row">
         <nav th:replace="@{fragments/menu.html} :: nav"></nav>
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            
           <div
             class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
           >
-            <h1 class="h2">Actualizar cliente</h1>
+            <h1 class="h2">Actualizar categoria </h1>
           </div>
 
           <form
-            th:action="@{/clientes/update}"
-            th:object="${cliente}"
+            th:action="@{/categorias/update}"
+            th:object="${categoria}"
             method="post"
           >
-            <input type="hidden" name="id" th:field="*{id}" />
+          <input type="hidden" name="id" th:field="*{id}">
             <div class="mb-3 row">
-              <label for="nombre" class="col-4 col-form-label">Nombre</label>
-              <div class="col-8">
-                <input
-                  type="text"
-                  class="form-control"
-                  name="nombre"
-                  id="nombre"
-                  th:field="*{nombre}"
-                  required
-                />
-              </div>
-            </div>
-            <div class="mb-3 row">
-              <label for="apellidos" class="col-4 col-form-label"
-                >Apellidos</label
+              <label for="descripcion" class="col-4 col-form-label"
+                >Descripcion</label
               >
               <div class="col-8">
                 <input
                   type="text"
                   class="form-control"
-                  name="apellidos"
-                  id="apellidos"
-                  aria-describedby="helpId"
-                  th:field="*{apellidos}"
-                  required
-                />
+                  name="descripcion"
+                  id="descripcion"
+                  th:field="*{descripcion}"
+                >
               </div>
-            </div>
             </div>
 
             <div class="mb-3 row">
-              <div class="text-end">
-                <button type="submit" class="btn btn-custom3 btn-lg">
-                  Actualizar
-                </button>
+              <div class="offset-sm-4 col-sm-8">
+                <button type="submit" class="btn btn-custom3">Añadir</button>
               </div>
             </div>
           </form>
         </main>
+      </div>
       </div>
       <footer>
         <!-- place footer here -->

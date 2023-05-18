@@ -43,7 +43,7 @@ public class CategoriaController {
     public String goUpdateCat(@PathVariable int id, Model model){
         model.addAttribute("categoria", categoriaService.findById(id));
    
-        return "formCategorias";
+        return "updateCategoria";
     }
 
     @PostMapping("/categorias/update")

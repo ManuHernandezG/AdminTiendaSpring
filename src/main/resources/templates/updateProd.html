@@ -45,6 +45,7 @@
                   name="nombre"
                   id="nombre"
                   th:field="*{nombre}"
+                  required
                 />
               </div>
             </div>
@@ -72,6 +73,8 @@
                   id="precio"
                   th:field="*{precio}"
                   step="0.01"
+                  min="0.01"
+                  required
                 />
               </div>
             </div>
@@ -85,6 +88,8 @@
                   id="stock"
                   th:field="*{stock}"
                   step="1"
+                  min="0"
+                  required
                 />
               </div>
             </div>

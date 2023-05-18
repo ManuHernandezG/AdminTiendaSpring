@@ -71,7 +71,7 @@ public class PedidoService {
         String fechaString = formatter.format(fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
 
         Configuracion conf =configuracionService.get("factura");
-        String numFactura="THC-" + fechaString +"-" +  conf.getValor();
+        String numFactura="TCH-" + fechaString +"-" +  conf.getValor();
         return numFactura;
     }
 }

@@ -82,5 +82,15 @@ public class ProductoServiceImpl{
             return false;
         }
     }
+
+    public boolean activateProd(int id) {
+        Producto old= productoRepository.getReferenceById(id);
+        old.setBaja(false);
+        if(productoRepository.save(old)!=null){
+            return true;
+        }else{
+            return false;
+        }
+    }
     
 }

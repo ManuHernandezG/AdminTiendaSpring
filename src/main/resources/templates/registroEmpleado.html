@@ -112,6 +112,7 @@
                 <div class="col-8">
                     <select class="form-select form-select" name="rol" id="rol">
                         <option 
+                        th:unless="${r.descripcion=='cliente'}"
                         th:each="r : ${roles}"
                         th:value="${r.id}"
                         th:text="${r.descripcion}"

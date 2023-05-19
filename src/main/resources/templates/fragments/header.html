@@ -1,5 +1,5 @@
 <header
-  class="navbar navbar-dark sticky-top bg-custom1 flex-md-nowrap p-3 shadow d-flex justify-content-end"
+  class="navbar navbar-dark sticky-top bg-custom4 flex-md-nowrap p-3 shadow d-flex justify-content-between"
   th:fragment="${header}"
 >
 <button
@@ -16,9 +16,11 @@ aria-label="Toggle navigation"
 <a
   class="navbar-brand col-md-3 col-lg-2 me-0 px-3 text-custom6 text-align-start"
   th:href="@{/dashboard}"
-  >The Crochet Hive</a
   >
- 
+    <img alt="logo" src="https://storage.googleapis.com/spring-app-tch/logo.png" height="80px">
+  </a
+  >
+ <div class="text-end d-flex mr-5">
 <div class="navbar-nav">
   <div class="nav-item text-nowrap">
     <a class="nav-link px-3 link-custom6" th:href="@{/logout}">Logout</a>
@@ -28,5 +30,6 @@ aria-label="Toggle navigation"
   <div class="nav-item text-nowrap">
     <a class="nav-link px-3 link-custom6" th:href="@{/perfil}">Perfil</a>
   </div>
+</div>
 </div>
 </header>

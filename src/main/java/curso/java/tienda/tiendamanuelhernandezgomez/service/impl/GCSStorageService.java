@@ -19,9 +19,6 @@ import com.google.cloud.storage.StorageOptions;
 @Service
 public class GCSStorageService {
 
-    @Autowired
-    private ImagenService imagenService;
-
     public void saveImagen(MultipartFile file, String bucketName,String fileName){
         try {
 

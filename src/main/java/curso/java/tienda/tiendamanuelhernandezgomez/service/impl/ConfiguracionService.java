@@ -1,5 +1,7 @@
 package curso.java.tienda.tiendamanuelhernandezgomez.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +19,22 @@ public class ConfiguracionService {
     }
 
     public void updateFactura() {
-        Configuracion conf=configuracionRepository.getByClave("factura");
+        Configuracion conf=configuracionRepository.getReferenceById(1);
         int num=Integer.parseInt(conf.getValor());
         num++;
         conf.setValor(String.valueOf(num));
         configuracionRepository.save(conf);
+    }
+
+    public List<Configuracion> findAll(){
+        return configuracionRepository.findAll();
+    }
+
+    public void updateTabla(Configuracion conf) {
+        Configuracion old=configuracionRepository.getByClave(conf.getClave());
+        old.setClave(conf.getClave());
+        old.setValor(conf.getValor());
+        configuracionRepository.save(old);
+
     }
 }

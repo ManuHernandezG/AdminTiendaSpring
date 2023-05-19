@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html
+  lang="es"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+>
+  <!-- xmlns:sec="http://www.thymeleaf.org/extras/spring-security" -->
+  <head>
+    <title>Panel de control</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link rel="stylesheet" href="css/custom.css" />
+  </head>
+
+  <body>
+    <div th:replace="@{fragments/header.html} :: header"></div>
+    <div class="container-fluid">
+      <div class="row">
+        <nav th:replace="@{fragments/menu.html} :: nav"></nav>
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+          <div class="chartjs-size-monitor">
+            <div class="chartjs-size-monitor-expand"><div class=""></div></div>
+            <div class="chartjs-size-monitor-shrink"><div class=""></div></div>
+          </div>
+          <div
+            class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+          >
+            <h1 class="h2">Configuración</h1>
+          </div>
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Clave</th>
+                <th>Valor</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="configuracion : ${configuraciones}">
+                <form th:action="@{/config}" method="post">     
+                <td th:text="${configuracion.id}">
+                  <input type="hidden" th:value="${configuracion.id}" name="id">
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    class="form-control campo-editable"
+                    th:value="${configuracion.clave}"
+                    name="clave"
+                    readonly
+                  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    class="form-control"
+                    data-columna="valor"
+                    name="valor"
+                    th:value="${configuracion.valor}"
+                  />
+                </td>
+                <td>
+                  <input type="submit" value="Actualizar" class="btn btn-outline-custom2">
+
+                </td>
+              </form>
+              </tr>
+            </tbody>
+          </table>
+        </main>
+      </div>
+      <footer>
+        <!-- place footer here -->
+      </footer>
+      <!-- Bootstrap JavaScript Libraries -->
+    </div>
+    
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+      integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+      integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

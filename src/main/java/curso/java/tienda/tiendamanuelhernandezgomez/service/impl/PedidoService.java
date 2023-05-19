@@ -66,7 +66,7 @@ public class PedidoService {
     }
 
     public String generarNumFactura(){
-        Date fecha = new Date(); // supongamos que tienes un objeto Date con la fecha actual
+        Date fecha = new Date(); 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         String fechaString = formatter.format(fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
 

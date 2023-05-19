@@ -80,6 +80,10 @@ public class UsuarioService {
         return userRepository.findPersonal();
     }
 
+    public Usuario findByEmail(String email){
+        return userRepository.findByEmail(email);
+    }
+
     public boolean updateUsuario(Usuario user){
         Usuario old= userRepository.getReferenceById(user.getId());
         old.setNombre(user.getNombre());

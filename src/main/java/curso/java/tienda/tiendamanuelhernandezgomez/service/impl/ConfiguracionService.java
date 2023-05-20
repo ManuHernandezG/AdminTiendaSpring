@@ -37,4 +37,8 @@ public class ConfiguracionService {
         configuracionRepository.save(old);
 
     }
+
+    public void save(Configuracion conf){
+        configuracionRepository.save(conf);
+    }
 }

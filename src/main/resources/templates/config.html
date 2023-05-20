@@ -41,7 +41,7 @@
                 <th>Valor</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="cuerpo">
               <tr th:each="configuracion : ${configuraciones}">
                 <form th:action="@{/config}" method="post">     
                 <td th:text="${configuracion.id}">
@@ -67,19 +67,45 @@
                 </td>
                 <td>
                   <input type="submit" value="Actualizar" class="btn btn-outline-custom2">
-
                 </td>
-              </form>
               </tr>
             </tbody>
+          </form>
           </table>
+          <button type="button" class="btn btn-custom1" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Añadir nuevo parametro
+          </button>
         </main>
+      </div>
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Formulario</h4>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form th:action="@{/config/new}" method="post">
+                <div class="form-group mb-3">
+                  <label for="clave">Clave:</label>
+                  <input type="text" class="form-control" name="clave" id="clave" placeholder="Clave">
+                </div>
+                <div class="form-group mb-3">
+                  <label for="valor">Valor:</label>
+                  <input type="text" class="form-control" name="valor" id="valor" placeholder="Valor">
+                </div>
+                <button type="submit" class="btn btn-custom1">Guardar</button>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
       <footer>
         <!-- place footer here -->
       </footer>
       <!-- Bootstrap JavaScript Libraries -->
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"

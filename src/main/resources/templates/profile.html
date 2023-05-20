@@ -76,6 +76,7 @@
                   th:field="*{email}"
                 />
               </div>
+              <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
             </div>
             <div class="mb-3 row">
               <label for="pass" class="col-4 col-form-label"
@@ -88,8 +89,10 @@
                   name="clave"
                   id="pass"
                   aria-describedby="helpId"
+                  th:field="*{clave}"
                 />
               </div>
+              <span th:if="${#fields.hasErrors('clave')}" th:errors="*{clave}"></span>
             </div>
             <div class="mb-3 row">
               <label for="pass2" class="col-4 col-form-label"

@@ -12,6 +12,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,9 +32,13 @@ public class Usuario {
 	@ManyToOne(cascade = CascadeType.ALL)
     private Rol rol;
 
+    @NotBlank(message = "Debes rellenar este campo es obligatorio")
+    @NotEmpty(message = "Debes rellenar el campo email es obligatorio")
+    @Email(message = "Debe tener el formato email")
     @Column(name = "email",unique = true)
     private String email;
     
+    @Size(min = 8, message = "Debe tener al menos 8 caracteres")
     @Column(name = "clave")
     private String clave;
 

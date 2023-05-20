@@ -51,8 +51,8 @@
           >
             <h1 class="h2">Productos</h1>
           </div>
-          <div class="album py-5">
-            <div class="container">
+          <section class="album py-5">
+            <section class="container">
               <div
                 class="row row-cols1 row-cols-sm2 row-cols-md-4 g-2 d-flex flex-wrap"
               >
@@ -70,9 +70,9 @@
                       <div
                         th:each="img, i : ${prod.imagenes}"
                         class="carousel-item active"
-                        th:classappend="${i==0} ? 'carrousel-item active' : 'carrousel-item'"
+                        th:classappend="${i==0} ? 'carrousel-item active card-img-wrapper' : 'carrousel-item card-img-wrapper'"
                       >
-                        <img th:attr="src=${img.url}" class="d-block w-100" />
+                        <img th:attr="src=${img.url}" class="card-img" width="100%" height="350px"/>
                       </div>
                     </div>
                     <a
@@ -103,7 +103,6 @@
                   <!-- <img th:src="@{img/}+${prod.imagen}" class="card-img img-fluid mt-2" alt="..." /> -->
                   <div class="card-body">
                     <h5 class="card-title" th:text="${prod.nombre}"></h5>
-                    <p class="card-text" th:text="${prod.descripcion}"></p>
                   </div>
                   <ul class="list-group list-group-flush">
                     <li
@@ -248,13 +247,13 @@
                         />
                         <path
                           d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"
-                        /></svg
-                    ></a>
+                        /></svg>
+                      </a>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
+            </section>
+          </section>
         </main>
       </div>
 

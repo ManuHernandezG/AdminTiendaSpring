@@ -28,60 +28,52 @@ public class WebSecurityConfig {
     @Autowired
     private UserDetailsServiceImpl detailsServiceImpl;
 
+    /**
+     * Bean que define el encriptador que vamos a usar a lo largo de la app
+     * @return Encriptador 
+     */
     @Bean
     public BCryptPasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
     
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http)throws Exception{
-    //    http.csrf().disable()
-    //     .authorizeRequests(a ->
-    //         a
-    //         .antMatchers("/", "/home","/index","/detalle/**","/contacto","/carrito/**","/registro").permitAll()
-    //         .antMatchers("/perfil/**").hasRole("USER")
-    //         .antMatchers("/admin/**").hasRole("ADMIN")
-    //     )
-    //     .formLogin(formLogin ->
-    //         formLogin
-    //         .loginPage("/login")
-    //         .permitAll()
-    //     )
-    //     .logout(logout ->
-    //         logout
-    //         .invalidateHttpSession(true)
-    //         .clearAuthentication(true)
-    //         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-    //         .permitAll()
-    //     )
-    //     .headers(headers->
-    //         headers
-    //         .frameOptions()
-    //         .sameOrigin()
-    //     )
-    //     .authenticationManager(authManager(http));
-
-        // http.csrf().disable().authorizeRequests()
-        //     .antMatchers("/", "/home","/index","/detalle/**","/contacto","/carrito/**","/registro").permitAll()
-        //     .antMatchers("/perfil/**").hasRole("USER")
-        //     .antMatchers("/admin/**").hasRole("ADMIN")
-        //     .and().formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/home")
-        //     .and().logout().invalidateHttpSession(true).clearAuthentication(true).logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll()
-        //     .and().headers().frameOptions().sameOrigin();
-
-        http.authorizeRequests()
-            .antMatchers("/config").permitAll()
-            .antMatchers("/", "/dashboard","/index","/pedidos/**","/categorias/**").authenticated() //.hasAnyRole("EMPLOYER","ADMIN")
-            .antMatchers("/productos/**","/clientes/**","/empleados/*","/config").hasRole("ADMIN")
-            .antMatchers("/productos", "/productos/update","/productos/new","/clientes/update", "/clientes/new").hasRole("EMPLOYER")
-            .and().formLogin()
-            // .loginPage("/login").permitAll().defaultSuccessUrl("/dashboard")
-            .and().logout().invalidateHttpSession(true).clearAuthentication(true).logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll()
-            .and().headers().frameOptions().sameOrigin()
-            .and().cors();
-        return http.build();
+    /**
+     * Bean principal de protección de rutas de SpringSecurity 
+     * @param http Seguridad general de la app
+     * @return Seguridad construida a traves de los filtros
+     * @throws Exception
+     */
+        @Bean
+        public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+            // Configuración de las reglas de autorización en la aplicación web
+            http.authorizeRequests()
+                .antMatchers("/config").permitAll() // Se permite acceso a "/config" a todos los usuarios
+                .antMatchers("/", "/dashboard", "/index", "/pedidos/**", "/categorias/**").authenticated() // Requiere autenticación para estas URLs
+                //.hasAnyRole("EMPLOYER","ADMIN") // Comentario: línea comentada, no tiene efecto en la configuración
+                .antMatchers("/productos/**", "/clientes/**", "/empleados/*", "/config").hasRole("ADMIN") // Requiere el rol "ADMIN" para acceder a estas URLs
+                .antMatchers("/productos", "/productos/update", "/productos/new", "/clientes/update", "/clientes/new").hasRole("EMPLOYER"); // Requiere el rol "EMPLOYER" para acceder a estas URLs
+        
+            // Configuración del formulario de inicio de sesión
+            http.formLogin();
+        
+            // Configuración del cierre de sesión
+            http.logout()
+                .invalidateHttpSession(true) // Invalida la sesión actual
+                .clearAuthentication(true) // Elimina la autenticación
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout")) // Se especifica el patrón de solicitud de cierre de sesión
+                .permitAll(); // Se permite acceso a todos los usuarios para cerrar sesión
+        
+            // Configuración de las cabeceras y opciones de seguridad
+            http.headers().frameOptions().sameOrigin(); // Permite el acceso al marco (frame) desde el mismo origen
+        
+            // Configuración de CORS (Cross-Origin Resource Sharing)
+            http.cors();
+        
+            // Devuelve el objeto SecurityFilterChain construido a partir de la configuración realizada
+            return http.build();
+        }
+        
        
-    }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource(){
@@ -95,11 +87,20 @@ public class WebSecurityConfig {
         return source;
     }
 
+    /**
+     * Bean que define las rutas que deben ser ignoradas 
+     * @return rutas ignoradas
+     */
     @Bean 
     public WebSecurityCustomizer webSecurityCustomizer(){
         return (web) -> web.ignoring().antMatchers("/js/**", "/css/**","/img/**","/i18n/**");
     }
 
+    /**
+     * @param http Seguridad de la app
+     * @return Servicio que controlará los roles, accesos y autenticacion de nuestra app
+     * @throws Exception
+     */
     @Bean 
     public AuthenticationManager authManager(HttpSecurity http)throws Exception{
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
@@ -107,13 +108,11 @@ public class WebSecurityConfig {
 
         return authenticationManagerBuilder.build();
     }
-    // /*~~(Migrate manually based on https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter)~~>*/@Override
-    // protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-    //     auth.authenticationProvider(authenticationProvider());
-            
-    // }
 
-
+    /**
+     * Bean que provee al authManager de un servicio de autenticacion contra la BBDD
+     * @return DaoAuthenticationProvider que proveerá al servicio principal
+     */
     @Bean
     public DaoAuthenticationProvider authenticationProvider(){
 

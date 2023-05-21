@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
-xmlns:th="http://www.thymeleaf.org"
+<html
+  lang="es"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
 >
-<!-- xmlns:sec="http://www.thymeleaf.org/extras/spring-security" -->
+  <!-- xmlns:sec="http://www.thymeleaf.org/extras/spring-security" -->
   <head>
     <title>Panel de control</title>
     <!-- Required meta tags -->
@@ -13,35 +15,80 @@ xmlns:th="http://www.thymeleaf.org"
     />
 
     <!-- Bootstrap CSS v5.2.1 -->
-    <link rel="stylesheet" href="css/custom.css">
-    
+    <link rel="stylesheet" href="css/custom.css" />
   </head>
 
   <body>
     <div th:replace="@{fragments/header.html} :: header"></div>
     <div class="container-fluid">
-    <div class="row">
-      
-      <nav th:replace="@{fragments/menu.html} :: nav"></nav>
-      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-        <div class="chartjs-size-monitor">
-          <div class="chartjs-size-monitor-expand"><div class=""></div></div>
-          <div class="chartjs-size-monitor-shrink"><div class=""></div></div>
-        </div>
-        <div
-          class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
-        >
-          <h1 class="h2">Dashboard</h1>
-          
-        </div>
-        
-      </main>
+      <div class="row">
+        <nav th:replace="@{fragments/menu.html} :: nav"></nav>
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+          <div
+            class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+          >
+            <h1 class="h2">Dashboard</h1>
+          </div>
+          <div class="chart-container" style="position: relative; height:40vh; width:80vw">
+            <canvas id="myChart"></canvas>
+          </div>
+        </main>
+      </div>
+      <footer>
+        <!-- place footer here -->
+      </footer>
+      <!-- Bootstrap JavaScript Libraries -->
     </div>
-    <footer>
-      <!-- place footer here -->
-    </footer>
-    <!-- Bootstrap JavaScript Libraries -->
-  </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
+    <script th:inline="javascript">
+      let ventas = `[[${ventas}]]`;
+      let visitas = `[[${visitas}]]`;
+      let ctx = document.getElementById("myChart").getContext("2d");
+
+      let data = {
+        labels: [ "Abril","Mayo", "Junio","Julio","Agosto"],
+        datasets: [
+          {
+            label: "Ventas",
+            data: ventas,
+            backgroundColor: "#dbb0b2",
+            borderColor: "#dbb0b2",
+            borderWidth: 1,
+            tension: 0.1
+          },
+          {
+            label: "Visitas",
+            data: visitas,
+            backgroundColor: "#bcc7c1",
+            borderColor: "#bcc7c1",
+            borderWidth: 1,
+            tension: 0.1
+          },
+        ],
+      };
+      var options = {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+                    callback: function(value, index, values) {
+                        if (Number.isInteger(value)) {
+                            return value;
+                        }
+                    }
+          },
+        },
+      },
+    }
+
+      new Chart(ctx, {
+        type: "bar",
+        data: data,
+        options: options,
+      });
+    </script>
+
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
       integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"

@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
@@ -18,6 +17,10 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer{
     
+    /**
+     * Método que resuelve el idioma local de la app
+     * @return LocaleResolver que marcará el idioma de la app
+     */
     @Bean
     public LocaleResolver localeResolver(){
         SessionLocaleResolver sessionLocaleResolver = new SessionLocaleResolver();
@@ -26,6 +29,7 @@ public class WebMvcConfig implements WebMvcConfigurer{
         return sessionLocaleResolver;
     }
 
+    
     @Bean
     public LocaleChangeInterceptor localeChangeInterceptor(){
         LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
@@ -41,6 +45,10 @@ public class WebMvcConfig implements WebMvcConfigurer{
         return messageSource;
     }
 
+    /**
+     * Resuelve la renderizacion y devolucion de las vistas por parte de thymeleaf, marcandole la ruta y extensión
+     * @return
+     */
     @Bean
     public ViewResolver getViewResolver(){
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
@@ -55,8 +63,4 @@ public class WebMvcConfig implements WebMvcConfigurer{
        registry.addInterceptor(localeChangeInterceptor());
     }
 
-    // @Override
-    // public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-    //     configurer.enable();
-    // }
 }

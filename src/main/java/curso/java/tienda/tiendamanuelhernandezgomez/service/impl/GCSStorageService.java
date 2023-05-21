@@ -19,25 +19,35 @@ import com.google.cloud.storage.StorageOptions;
 @Service
 public class GCSStorageService {
 
-    public void saveImagen(MultipartFile file, String bucketName,String fileName){
+    public void saveImagen(MultipartFile file, String bucketName, String fileName) {
         try {
-
-            File archivo= new File("src/main/resources/json/credenciales.json");
-
-            InputStream input= new FileInputStream(archivo);
-            GoogleCredentials credentials= GoogleCredentials.fromStream(input);
-            StorageOptions options=StorageOptions.newBuilder().setCredentials(credentials).build();
-
-            Storage storage=(Storage) options.getService();
-        
-            BlobId blobId=BlobId.of(bucketName, fileName);
-
-            BlobInfo blobInfo=BlobInfo.newBuilder(blobId).build();
-
+            // Carga el archivo de credenciales necesarias para autenticarse con Google Cloud Storage
+            File archivo = new File("src/main/resources/json/credenciales.json");
+    
+            // Crea un flujo de entrada para leer el archivo de credenciales
+            InputStream input = new FileInputStream(archivo);
+    
+            // Obtiene las credenciales de Google desde el flujo de entrada
+            GoogleCredentials credentials = GoogleCredentials.fromStream(input);
+    
+            // Configura las opciones de almacenamiento con las credenciales
+            StorageOptions options = StorageOptions.newBuilder().setCredentials(credentials).build();
+    
+            // Crea una instancia del servicio de almacenamiento
+            Storage storage = (Storage) options.getService();
+    
+            // Crea una identificación única para el archivo en el bucket especificado
+            BlobId blobId = BlobId.of(bucketName, fileName);
+    
+            // Crea la información del blob con la identificación única
+            BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
+    
+            // Crea el blob en Google Cloud Storage y guarda los bytes del archivo en él
             Blob blob = storage.create(blobInfo, file.getBytes());
-
         } catch (IOException e) {
+            // Maneja cualquier excepción de E/S que ocurra durante la operación
             e.printStackTrace();
         }
     }
+    
 }

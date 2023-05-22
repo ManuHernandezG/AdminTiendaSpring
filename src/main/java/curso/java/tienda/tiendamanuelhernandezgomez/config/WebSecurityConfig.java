@@ -49,7 +49,6 @@ public class WebSecurityConfig {
             http.authorizeRequests()
                 .antMatchers("/config").permitAll() // Se permite acceso a "/config" a todos los usuarios
                 .antMatchers("/", "/dashboard", "/index", "/pedidos/**", "/categorias/**").authenticated() // Requiere autenticación para estas URLs
-                //.hasAnyRole("EMPLOYER","ADMIN") // Comentario: línea comentada, no tiene efecto en la configuración
                 .antMatchers("/productos/**", "/clientes/**", "/empleados/*", "/config").hasRole("ADMIN") // Requiere el rol "ADMIN" para acceder a estas URLs
                 .antMatchers("/productos", "/productos/update", "/productos/new", "/clientes/update", "/clientes/new").hasRole("EMPLOYER"); // Requiere el rol "EMPLOYER" para acceder a estas URLs
         
